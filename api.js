@@ -22,6 +22,7 @@ api.start = (dserver, port) => {
 
   app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`);
+    console.log(`Targeting server ${dserver.name} (${dserver.id})`);
   });
   return app;
 };
