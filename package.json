@@ -4,6 +4,7 @@
   "description": "Clu is a general-use bot tailored for CoolHandSkywalker's Community Discord server.",
   "main": "index.js",
   "scripts": {
+    "debug": "node --inspect -r dotenv/config index.js",
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,6 +19,7 @@
   },
   "homepage": "https://github.com/jSadoski/CHS-Clu#readme",
   "devDependencies": {
+    "dotenv": "^8.2.0",
     "eslint": "^7.15.0",
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
