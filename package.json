@@ -24,6 +24,7 @@
     "sqlite3": "^5.0.0"
   },
   "dependencies": {
+    "ajax": "0.0.4",
     "discord.js": "^12.5.1",
     "express": "^4.17.1",
     "sequelize": "^6.3.5"
