@@ -5,26 +5,123 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>CHS Discord Bot</title>
     <script src="https://unpkg.com/vue@next"></script>
-    <script src="https://unpkg.com/vue-router@2.0.0"></script>
+    <!-- <script src="https://unpkg.com/vue-router@2.0.0"></script> -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/main.js"></script>
 
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"
+      href="https://cdn.materialdesignicons.com/5.3.45/css/materialdesignicons.min.css"
     />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"
+      href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
     />
+    <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css" />
   </head>
 
   <body>
-    <section class="section">
-      <div class="container">
-        <h1 class="title">Hello World</h1>
-        <p class="subtitle">My first website with <strong>Bulma</strong>!</p>
-      </div>
-    </section>
-  </body>
+    <div id="app">
+      <template>
+        <b-navbar>
+          <template slot="brand">
+            <b-navbar-item :to="{ path: '/' }">
+              <img
+                src="https://raw.githubusercontent.com/buefy/buefy/dev/static/img/buefy-logo.png"
+                alt="Lightweight UI components for Vue.js based on Bulma"
+              />
+            </b-navbar-item>
+          </template>
+          <template slot="start">
+            <b-navbar-item href="#"> Home </b-navbar-item>
+            <b-navbar-item href="#"> Documentation </b-navbar-item>
+            <b-navbar-dropdown label="Info">
+              <b-navbar-item href="#"> About </b-navbar-item>
+              <b-navbar-item href="#"> Contact </b-navbar-item>
+            </b-navbar-dropdown>
+          </template>
 
-  <script></script>
+          <!-- <template slot="end">
+            <b-navbar-item tag="div">
+              <div class="buttons">
+                <a class="button is-primary">
+                  <strong>Sign up</strong>
+                </a>
+                <a class="button is-light"> Log in </a>
+              </div>
+            </b-navbar-item>
+          </template> -->
+        </b-navbar>
+      </template>
+
+      <section class="section">
+        <b-field label="Message">
+          <b-input maxlength="200" type="textarea" v-model="message"></b-input>
+        </b-field>
+      </section>
+
+      <section class="section">
+        <template id="channel-list">
+          <b-menu>
+            <b-menu-list
+              v-for="category in channeltree"
+              :key="category.id"
+              v-bind:label="category.name"
+            >
+              <b-menu-item
+                v-for="channel in category.channels"
+                :key="channel.id"
+                v-bind:label="channel.name"
+                @click="send(channel.id)"
+              >
+              </b-menu-item>
+            </b-menu-list>
+          </b-menu>
+        </template>
+      </section>
+      <!-- <ul id="channels">
+        <li v-for="channel in channeltree" :key="channel.id">{{ channel }}</li>
+      </ul> -->
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <!-- Full bundle -->
+    <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+
+    <script>
+      new Vue({
+        el: "#app",
+        data() {
+          return {
+            channels: null,
+            channeltree: [],
+            message: null,
+          };
+        },
+        mounted() {
+          axios.get("/api/channels").then((response) => {
+            this.channels = response.data;
+            let categories = this.channels.filter(
+              (channel) => channel.type == "category"
+            );
+
+            categories.forEach((category) => {
+              category.channels = this.channels.filter(
+                (channel) => channel.parentID == category.id
+              );
+              this.channeltree.push(category);
+            });
+          });
+        },
+        methods: {
+          send: function (channelID) {
+            axios.post("/api/message", {
+              message: this.message,
+              channel: channelID,
+            });
+          },
+        },
+      });
+    </script>
+  </body>
 </html>
