@@ -4,7 +4,12 @@ const router = express.Router();
 router.setserver = (dserver) => {
   /* / */
   router.get("/", (req, res) => {
-    res.send(`Serving on ${dserver}`);
+    res.send(`Serving on ${dserver.name}`);
+  });
+
+  /* channels */
+  router.get("/channels", (req, res) => {
+    res.json(dserver.channels.cache.array());
   });
 
   /* message */

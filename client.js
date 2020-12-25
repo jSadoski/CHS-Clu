@@ -2,12 +2,14 @@ const Discord = require("discord.js");
 
 const client = new Discord.Client();
 
-client.start = (token) => {
+client.start = async (token) => {
   client.once("ready", () => {
     console.log("Client logged in");
   });
 
-  client.login(token);
+  await client.login(token);
+
+  return client;
 };
 
 module.exports = client;
