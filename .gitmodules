@@ -1,0 +1,3 @@
+[submodule "admin-client"]
+	path = admin-client
+	url = ./admin-client
