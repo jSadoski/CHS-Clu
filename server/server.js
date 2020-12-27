@@ -11,14 +11,9 @@ api.start = (dserver, port) => {
   // serve static directory
   app.use(express.static("static"));
 
-  // serve admin client on root
-  app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname + "/adminclient/index.html"));
-  });
-
   // init router with discord server reference
   const routes = router.setserver(dserver);
-  app.use("/api", routes);
+  app.use("/", routes);
 
   app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`);

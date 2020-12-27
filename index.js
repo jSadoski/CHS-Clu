@@ -1,6 +1,6 @@
-const client = require("./client");
+const client = require("./discord/client");
 // const Sequelize = require("sequelize");
-const api = require("./api.js");
+const api = require("./server/server");
 
 if (("BOT_TOKEN", "PORT", "SERVER" in process.env)) {
   client
