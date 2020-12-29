@@ -1,12 +1,15 @@
 const express = require("express");
 const router = require("./routes");
 const path = require("path");
+var cors = require("cors");
 
 const api = {};
 
 api.start = (dserver, port) => {
   const app = express();
   app.use(express.json()); // for parsing type=application/json
+
+  app.use(cors());
 
   // serve static directory
   app.use(express.static("static"));
