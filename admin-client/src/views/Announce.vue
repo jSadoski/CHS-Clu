@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import Channels from "../components/Channels.vue";
 
 export default {
@@ -28,10 +27,9 @@ export default {
   components: { Channels },
   methods: {
     send: function() {
-      const channelID = this.selectedChannel;
-      axios.post(`${process.env.API_SERVER}/message`, {
+      this.$http.post("/message", {
         message: this.message,
-        channel: channelID
+        channel: this.selectedChannel
       });
     }
   }

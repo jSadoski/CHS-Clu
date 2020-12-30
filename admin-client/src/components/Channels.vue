@@ -29,8 +29,6 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "channels",
   props: ["initialSelectedChannel"],
@@ -48,8 +46,8 @@ export default {
     }
   },
   mounted() {
-    axios
-      .get(`${process.env.API_SERVER}/channels`)
+    this.$http
+      .get("/channels")
       .then(response => {
         this.channels = response.data;
         let categories = this.channels.filter(
@@ -63,7 +61,11 @@ export default {
           this.channeltree.push(category);
         });
       })
-      .catch(err => console.log(err));
+      .catch(err =>
+        console.log(
+          `${err}: Couldn't connect to ${process.env.VUE_APP_API_SERVER}`
+        )
+      );
   }
 };
 </script>
