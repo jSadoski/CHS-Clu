@@ -6,6 +6,7 @@
   "scripts": {
     "debug": "concurrently \"node --inspect -r dotenv/config index.js\" \"npm run --prefix ./admin-client/ serve\"",
     "debug-client": "npm run --prefix ./admin-client/ serve",
+    "build-client": "npm run --prefix ./admin-client/ build",
     "debug-api": "node --inspect -r dotenv/config index.js",
     "start": "concurrently \"node index.js\" \"npm run --prefix ./admin-client/ serve\"",
     "test": "echo \"Error: no test specified\" && exit 1"
