@@ -29,7 +29,7 @@ export default {
   methods: {
     send: function() {
       const channelID = this.selectedChannel;
-      axios.post(`http://${window.location.hostname}:4000/message`, {
+      axios.post(`${process.env.API_SERVER}/message`, {
         message: this.message,
         channel: channelID
       });

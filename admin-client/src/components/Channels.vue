@@ -49,7 +49,7 @@ export default {
   },
   mounted() {
     axios
-      .get(`http://${window.location.hostname}:4000/channels`)
+      .get(`${process.env.API_SERVER}/channels`)
       .then(response => {
         this.channels = response.data;
         let categories = this.channels.filter(
