@@ -8,7 +8,7 @@
     "debug-client": "npm run --prefix ./admin-client/ serve",
     "build-client": "npm run --prefix ./admin-client/ build",
     "debug-api": "node --inspect -r dotenv/config index.js",
-    "start": "concurrently \"node index.js\" \"npm run --prefix ./admin-client/ serve\"",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
