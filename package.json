@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/jSadoski/CHS-Clu#readme",
   "devDependencies": {
+    "concurrently": "^5.3.0",
     "dotenv": "^8.2.0",
     "eslint": "^7.15.0",
     "jest": "^26.6.3",
@@ -29,7 +30,6 @@
     "sqlite3": "^5.0.0"
   },
   "dependencies": {
-    "concurrently": "^5.3.0",
     "cors": "^2.8.5",
     "discord.js": "^12.5.1",
     "express": "^4.17.1",
