@@ -17,7 +17,7 @@
               v-for="channel in category.channels"
               :key="channel.id"
               :label="channel.name"
-              v-on:click="onChannelClick(channel.id)"
+              v-on:click="onChannelClick(channel)"
               icon="pound"
             >
             </b-menu-item>
@@ -31,10 +31,9 @@
 <script>
 export default {
   name: "channels",
-  props: ["initialSelectedChannel"],
+  props: ["selectedChannel"],
   data() {
     return {
-      selectedChannel: this.initialSelectedChannel,
       channels: null,
       channeltree: []
     };

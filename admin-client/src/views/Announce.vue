@@ -29,7 +29,7 @@ export default {
     send: function() {
       this.$http.post("/message", {
         message: this.message,
-        channel: this.selectedChannel
+        channel: this.selectedChannel.id
       });
     }
   }
