@@ -31,6 +31,10 @@
 <script>
 export default {
   name: "channels",
+  model: {
+    prop: "selectedChannel",
+    event: "changeChannel"
+  },
   props: ["selectedChannel"],
   data() {
     return {
@@ -39,9 +43,9 @@ export default {
     };
   },
   methods: {
-    onChannelClick(channelID) {
-      this.selectedChannel = channelID;
-      this.$emit("changeChannel", channelID);
+    onChannelClick(channel) {
+      this.selectedChannel = channel;
+      this.$emit("changeChannel", channel);
     }
   },
   mounted() {

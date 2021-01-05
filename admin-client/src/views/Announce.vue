@@ -3,10 +3,7 @@
     <b-field label="Send this message:">
       <b-input maxlength="2000" type="textarea" v-model="message"></b-input>
     </b-field>
-    <channels
-      :selectedChannel="this.selectedChannel"
-      v-on:changeChannel="selectedChannel = $event"
-    />
+    <channels v-model="selectedChannel" />
     <section class="section">
       <b-button type="is-primary" expanded @click="send()">Send</b-button>
     </section>
