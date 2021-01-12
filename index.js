@@ -1,18 +1,8 @@
-const client = require("./discord/client");
-// const Sequelize = require("sequelize");
-const api = require("./server/server");
+const app = require("./app");
 
 if (("BOT_TOKEN", "PORT", "DISCORD_SERVER" in process.env)) {
-  client
-    .start(process.env.BOT_TOKEN)
-    .then((client) =>
-      api.start(
-        client.guilds.cache
-          .array()
-          .filter((guild) => guild.id == process.env.DISCORD_SERVER)[0],
-        process.env.PORT
-      )
-    )
+  app(process.env.BOT_TOKEN, process.env.DISCORD_SERVER, process.env.PORT)
+    .then()
     .catch((err) => console.log(err.message));
 } else {
   console.log(
