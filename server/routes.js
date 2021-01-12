@@ -4,7 +4,7 @@ const router = express.Router();
 router.setserver = (dserver) => {
   /* / */
   router.get("/", (req, res) => {
-    res.send(`Serving on ${dserver.name}`);
+    res.send(`Serving as ${dserver.me.user.username} (${dserver.me.user.id}) on server ${dserver.name} (${dserver.id})`);
   });
 
   /* channels */
