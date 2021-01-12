@@ -4,7 +4,7 @@ const client = new Discord.Client();
 
 client.start = async (token) => {
   client.once("ready", () => {
-    console.log("Client logged in");
+    console.log(`Client logged in as ${client.me.user.name}: ${client.me.user.id}`);
   });
 
   await client.login(token);
