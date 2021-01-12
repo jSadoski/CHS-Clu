@@ -5,7 +5,7 @@ var cors = require("cors");
 
 const api = {};
 
-api.start = (dserver, port) => {
+api.start = async (dserver, port) => {
   const app = express();
   app.use(express.json()); // for parsing type=application/json
 
@@ -18,7 +18,7 @@ api.start = (dserver, port) => {
   const routes = router.setserver(dserver);
   app.use("/", routes);
 
-  app.listen(port, () => {
+  await app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`);
     console.log(`Targeting server ${dserver.name} (${dserver.id})`);
   });
