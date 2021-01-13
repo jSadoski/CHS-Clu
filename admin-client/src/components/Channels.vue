@@ -52,7 +52,7 @@ export default {
     this.$http
       .get("/channels")
       .then(response => {
-        this.channels = response.data;
+        this.channels = response.data.cache;
         let categories = this.channels.filter(
           channel => channel.type == "category"
         );
