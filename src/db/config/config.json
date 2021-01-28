@@ -4,14 +4,14 @@
     "password": null,
     "database": "database_development",
     "dialect": "sqlite",
-    "storage": "database_development.db"
+    "storage": "./database_development.db"
   },
   "test": {
     "username": "root",
     "password": null,
     "database": "database_test",
     "dialect": "sqlite",
-    "storage": "database_testing.db"
+    "storage": "./database_testing.db"
   },
   "production": {
     "username": "root",
