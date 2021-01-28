@@ -16,6 +16,9 @@
       <b-navbar-item tag="router-link" :to="{ path: '/announce' }">
         Announce
       </b-navbar-item>
+      <b-navbar-item tag="router-link" :to="{ path: '/poll' }">
+        Create Poll
+      </b-navbar-item>
       <b-navbar-item tag="router-link" :to="{ path: '/about' }">
         About
       </b-navbar-item>
