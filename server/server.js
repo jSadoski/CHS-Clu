@@ -3,7 +3,7 @@ const router = require("./routes");
 const path = require("path");
 var cors = require("cors");
 
-module.exports = async (dserver, port) => {
+module.exports = async (dserver, db, port) => {
   const app = express();
   app.use(express.json()); // for parsing type=application/json
 
@@ -13,7 +13,7 @@ module.exports = async (dserver, port) => {
   app.use(express.static("static"));
 
   // init router with discord server reference
-  const routes = router.setserver(dserver);
+  const routes = router.setserver(dserver, db);
   app.use("/", routes);
 
   const http = await app.listen(port, () => {

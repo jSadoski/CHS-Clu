@@ -2,7 +2,7 @@ const _ = require("lodash");
 const express = require("express");
 const router = express.Router();
 
-router.setserver = (guild) => {
+router.setserver = (guild, db) => {
   /* root */
   router.get("/", (req, res) => {
     res.send(
@@ -417,7 +417,7 @@ router.setserver = (guild) => {
     */
 
   /* Server Interactions */
-  /* message */
+  /* /message */
   router.post("/message", (req, res, next) => {
     guild.channels.cache
       .get(req.body.channel)
@@ -426,21 +426,44 @@ router.setserver = (guild) => {
       .catch((err) => res.send(err.message));
   });
 
-  /* poll */
+  /* 
+    /poll 
+    Example object:
+    {
+      channel:string,
+      title:string,
+      time:int,
+      question:string,
+      questions:array[{emoji:string, question:string}]
+    }
+  */
   router.post("/poll", (req, res) => {
+    const poll = req.body;
+    const pollDB = db.Poll.build({
+      channel: poll["channel"],
+      title: poll["title"],
+      question: poll["question"],
+      answers: poll["answers"],
+    });
+    pollDB
+      .save()
+      .then((rec) => (poll.db = rec))
+      .catch((err) => console.log(err));
+
     guild.channels.cache
-      .get(req.body.channel)
+      .get(req.body["channel"])
       .send(req.body.poll)
-      .then((pr) => {
-        res.send(pr);
+      .then((message) => {
+        res.send(message);
 
         const filter = (reaction, user) => {
           return reaction.emoji.name === "👍";
         };
 
-        pr.awaitReactions(filter, {
-          time: 15000,
-        })
+        message
+          .awaitReactions(filter, {
+            time: req.body["time"],
+          })
           .then((collected) => console.log(collected))
           .catch((err) => console.log(err.message));
       })
