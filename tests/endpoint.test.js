@@ -1,6 +1,6 @@
 require("dotenv").config();
 const request = require("supertest");
-const app = require("../app.js");
+const app = require("../src/app.js");
 
 describe("Server Endpoint", () => {
   let instance, http;
