@@ -1,8 +1,9 @@
 const _ = require("lodash");
+const Discord = require("discord.js");
 const express = require("express");
 const router = express.Router();
 
-router.setserver = (guild) => {
+router.setserver = (guild, db) => {
   /* root */
   router.get("/", (req, res) => {
     res.send(
@@ -417,7 +418,7 @@ router.setserver = (guild) => {
     */
 
   /* Server Interactions */
-  /* message */
+  /* /message */
   router.post("/message", (req, res, next) => {
     guild.channels.cache
       .get(req.body.channel)
@@ -426,21 +427,45 @@ router.setserver = (guild) => {
       .catch((err) => res.send(err.message));
   });
 
-  /* poll */
-  router.post("/poll", (req, res) => {
+  /* 
+    /poll 
+    Example object:
+    {
+      channel:string,
+      title:string,
+      time:int,
+      question:string,
+      questions:array[{emoji:string, question:string}]
+    }
+  */
+  router.post("/poll", async (req, res) => {
+    const poll = req.body;
+    poll.db = await db.Poll.create({
+      channel: poll["channel"],
+      title: poll["title"],
+      question: poll["question"],
+      answers: poll["answers"],
+    });
+
+    const embed = new Discord.MessageEmbed()
+      .setTitle(poll.db["title"])
+      .setDescription(poll.db["question"])
+      .addFields(poll.db["answers"]);
+
     guild.channels.cache
-      .get(req.body.channel)
-      .send(req.body.poll)
-      .then((pr) => {
-        res.send(pr);
+      .get(poll.db["channel"])
+      .send(embed)
+      .then((message) => {
+        res.send(message);
 
         const filter = (reaction, user) => {
           return reaction.emoji.name === "👍";
         };
 
-        pr.awaitReactions(filter, {
-          time: 15000,
-        })
+        message
+          .awaitReactions(filter, {
+            time: req.body["time"],
+          })
           .then((collected) => console.log(collected))
           .catch((err) => console.log(err.message));
       })
