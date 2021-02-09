@@ -6,7 +6,7 @@ jobs:
     steps:
       - checkout
       - run: npm config set python /usr/bin/python3
-      - run: npm install --dev
+      - run: npm install --also=dev
   test:
     docker:
       - image: "cimg/node:14.14.0"
