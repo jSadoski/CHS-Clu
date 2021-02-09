@@ -1,4 +1,5 @@
 const _ = require("lodash");
+const Discord = require("discord.js");
 const express = require("express");
 const router = express.Router();
 
@@ -437,22 +438,23 @@ router.setserver = (guild, db) => {
       questions:array[{emoji:string, question:string}]
     }
   */
-  router.post("/poll", (req, res) => {
+  router.post("/poll", async (req, res) => {
     const poll = req.body;
-    const pollDB = db.Poll.build({
+    poll.db = await db.Poll.create({
       channel: poll["channel"],
       title: poll["title"],
       question: poll["question"],
       answers: poll["answers"],
     });
-    pollDB
-      .save()
-      .then((rec) => (poll.db = rec))
-      .catch((err) => console.log(err));
+
+    const embed = new Discord.MessageEmbed()
+      .setTitle(poll.db["title"])
+      .setDescription(poll.db["question"])
+      .addFields(poll.db["answers"]);
 
     guild.channels.cache
-      .get(req.body["channel"])
-      .send(req.body.poll)
+      .get(poll.db["channel"])
+      .send(embed)
       .then((message) => {
         res.send(message);
 

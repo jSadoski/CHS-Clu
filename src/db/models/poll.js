@@ -17,7 +17,15 @@ module.exports = (sequelize, DataTypes) => {
       channel: DataTypes.STRING,
       title: DataTypes.STRING,
       question: DataTypes.STRING,
-      answers: DataTypes.STRING,
+      answers: {
+        type: DataTypes.STRING,
+        get() {
+          const rawValue = this.getDataValue("answers").split(";");
+        },
+        set(val) {
+          this.setDataValue("answers", val.join(";"));
+        },
+      },
     },
     {
       sequelize,

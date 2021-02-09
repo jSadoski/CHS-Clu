@@ -75,4 +75,36 @@ describe("Server Endpoint", () => {
         expect(resObj.available).toEqual(instance.guild.available);
         done();
       }));
+
+  test("/poll (post)", (done) => {
+    const answer = (emoji, answerText) => {
+      return { emoji: emoji, answer: answerText };
+    };
+
+    const poll = {
+      channel: "804484826488635402",
+      title: "Food",
+      question: "What would you like to eat?",
+      answers: [
+        answer("🌯", "Burrito"),
+        answer("🍱", "Bento Box"),
+        answer("🍰", "Shortcake"),
+        answer("🥟", "Dumpling"),
+      ],
+    };
+    request(http)
+      .post("/poll")
+      .send(poll)
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.statusCode).toBe(200);
+        const resObj = JSON.parse(res.text);
+        expect(resObj).toHaveProperty("id");
+        expect(resObj).toHaveProperty("channelID");
+        expect(resObj.channelID).toEqual(poll.channel);
+        done();
+      });
+  });
 });
