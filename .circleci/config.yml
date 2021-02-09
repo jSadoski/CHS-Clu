@@ -1,22 +1,17 @@
 version: 2.1
 jobs:
-  build:
-    docker:
-      - image: "cimg/node:14.14.0"
+  test:
+    executor: node/default
     steps:
       - checkout
       - run: npm config set python /usr/bin/python3
-      - run: npm install --also=dev
-  test:
-    docker:
-      - image: "cimg/node:14.14.0"
-    steps:
-      - checkout
-      - run: npm test
+      - node/install-packages:
+          cache-path: ~/project/node_modules
+          override-ci-command: npm install
+      - run: npm run test
+orbs:
+  node: circleci/node@14.14.0
 workflows:
-  build_and_test:
+  test_my_app:
     jobs:
-      - build
-      - test:
-          requires:
-            - build
+      - test
