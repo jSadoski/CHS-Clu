@@ -9,9 +9,9 @@
   "test": {
     "username": "root",
     "password": null,
-    "database": "database_test",
-    "dialect": "sqlite",
-    "storage": "./database_testing.db"
+    "database": "database_testing",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
   },
   "production": {
     "username": "root",
