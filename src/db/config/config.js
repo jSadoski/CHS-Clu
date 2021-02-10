@@ -20,7 +20,12 @@ module.exports = {
     dialect: "postgres",
     use_env_variable: "DATABASE_URL",
     dialectOptions: {
-      ssl: true,
+      // Fixes "SequelizeConnectionError: self signed certificate"
+      // https://stackoverflow.com/a/61350416/705296
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
     },
   },
 };
