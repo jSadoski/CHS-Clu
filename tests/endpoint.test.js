@@ -1,23 +1,45 @@
 require("dotenv").config();
 const request = require("supertest");
 const app = require("../src/app.js");
+const path = require("path");
+const Umzug = require("umzug");
+
+const migrations = path.join(__dirname, "../src/db/migrations");
 
 describe("Server Endpoint", () => {
-  let instance, http;
+  let instance, http, umzug;
 
-  beforeAll(async () => {
-    if (("BOT_TOKEN", "PORT", "DISCORD_SERVER" in process.env)) {
-      instance = await app(
-        process.env.BOT_TOKEN,
-        process.env.DISCORD_SERVER,
-        4001
-      );
-      http = instance.http;
-    } else {
-      console.log(
-        `Missing required environment variables.\nBOT_TOKEN: ${process.env.BOT_TOKEN}, PORT: ${process.env.PORT},DISCORD_SERVER: ${process.env.DISCORD_SERVER}`
-      );
-    }
+  beforeAll(async (done) => {
+    instance = await app(
+      process.env.BOT_TOKEN,
+      process.env.DISCORD_SERVER,
+      4001
+    );
+    // instance.db.sequelize.authenticate(); // Test DB connection
+    // const sequelize = instance.db.sequelize;
+    // const umzug = new Umzug({
+    //   migrations: {
+    //     // indicates the folder containing the migration .js files
+    //     path: migrations,
+    //     // inject sequelize's QueryInterface in the migrations
+    //     params: [sequelize.getQueryInterface()],
+    //   },
+    //   // indicates that the migration data should be store in the database
+    //   // itself through sequelize. The default configuration creates a table
+    //   // named `SequelizeMeta`.
+    //   storage: "sequelize",
+    //   storageOptions: {
+    //     sequelize: sequelize,
+    //   },
+    // });
+
+    // // Checks migrations and run them if they are not already applied. To keep
+    // // track of the executed migrations, a table (and sequelize model) called SequelizeMeta
+    // // will be automatically created (if it doesn't exist already) and parsed.
+    // await umzug.up();
+
+    http = instance.http;
+    done();
   });
 
   afterAll(async (done) => {
@@ -76,7 +98,7 @@ describe("Server Endpoint", () => {
         done();
       }));
 
-  test("/poll (post)", (done) => {
+  xtest("/poll (post)", (done) => {
     const answer = (emoji, answerText) => {
       return { emoji: emoji, answer: answerText };
     };
