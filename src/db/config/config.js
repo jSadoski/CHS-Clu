@@ -16,7 +16,8 @@ module.exports = {
     username: "root",
     password: null,
     database: "database_production",
-    host: process.env["DATABASE_URL"],
+    host: "localhost",
     dialect: "postgres",
+    use_env_variable: "DATABASE_URL",
   },
 };
