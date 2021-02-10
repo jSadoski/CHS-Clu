@@ -1,21 +1,17 @@
+require("dotenv").config();
+
 module.exports = {
   development: {
-    username: "root",
-    password: null,
-    database: "database_development",
-    dialect: "sqlite",
-    storage: "./database_development.db",
+    host: "localhost",
+    dialect: "postgres",
+    use_env_variable: "DATABASE_URL",
   },
   test: {
-    username: "root",
-    password: null,
-    database: "database_testing",
-    dialect: "sqlite",
+    host: "localhost",
+    dialect: "postgres",
+    use_env_variable: "DATABASE_URL",
   },
   production: {
-    username: "root",
-    password: null,
-    database: "database_production",
     host: "localhost",
     dialect: "postgres",
     use_env_variable: "DATABASE_URL",
