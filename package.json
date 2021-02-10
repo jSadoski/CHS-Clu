@@ -14,6 +14,8 @@
     "debug-client": "npm run --prefix ./src/admin-client/ serve",
     "build-client": "npm run --prefix ./src/admin-client/ build",
     "debug-api": "node --inspect -r dotenv/config ./src/index.js",
+    "migrate": "npx -r dotenv/config sequelize db:migrate",
+    "prestart": "npx -r dotenv/config sequelize db:migrate",
     "start": "node ./src/index.js",
     "test": "jest"
   },
