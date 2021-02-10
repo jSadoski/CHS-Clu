@@ -10,6 +10,7 @@
   "description": "Clu is a general-use bot tailored for CoolHandSkywalker's Community Discord server.",
   "main": "index.js",
   "scripts": {
+    "install-admin": "npm install --prefix ./src/admin-client/",
     "debug": "concurrently \"node --inspect -r dotenv/config ./src/index.js\" \"npm run --prefix ./src/admin-client/ serve\"",
     "debug-client": "npm run --prefix ./src/admin-client/ serve",
     "build-client": "npm run --prefix ./src/admin-client/ build",
