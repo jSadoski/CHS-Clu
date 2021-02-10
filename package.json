@@ -14,7 +14,7 @@
     "debug-client": "npm run --prefix ./src/admin-client/ serve",
     "build-client": "npm run --prefix ./src/admin-client/ build",
     "debug-api": "node --inspect -r dotenv/config ./src/index.js",
-    "start": "node index.js",
+    "start": "node ./src/index.js",
     "test": "jest"
   },
   "repository": {
