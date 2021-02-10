@@ -10,6 +10,7 @@
   "description": "Clu is a general-use bot tailored for CoolHandSkywalker's Community Discord server.",
   "main": "index.js",
   "scripts": {
+    "install-admin": "npm install --prefix ./src/admin-client/",
     "debug": "concurrently \"node --inspect -r dotenv/config ./src/index.js\" \"npm run --prefix ./src/admin-client/ serve\"",
     "debug-client": "npm run --prefix ./src/admin-client/ serve",
     "build-client": "npm run --prefix ./src/admin-client/ build",
@@ -17,7 +18,8 @@
     "migrate": "npx -r dotenv/config sequelize db:migrate",
     "prestart": "npx -r dotenv/config sequelize db:migrate",
     "start": "node ./src/index.js",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "repository": {
     "type": "git",
