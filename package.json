@@ -14,6 +14,8 @@
     "debug-client": "npm run --prefix ./src/admin-client/ serve",
     "build-client": "npm run --prefix ./src/admin-client/ build",
     "debug-api": "node --inspect -r dotenv/config ./src/index.js",
+    "migrate": "npx -r dotenv/config sequelize db:migrate",
+    "prestart": "npx -r dotenv/config sequelize db:migrate",
     "start": "node ./src/index.js",
     "test": "jest"
   },
@@ -34,7 +36,6 @@
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
     "sequelize-cli": "^6.2.0",
-    "sqlite3": "^5.0.1",
     "supertest": "^6.0.1",
     "umzug": "^2.3.0"
   },
