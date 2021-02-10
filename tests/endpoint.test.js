@@ -15,29 +15,7 @@ describe("Server Endpoint", () => {
       process.env.DISCORD_SERVER,
       4001
     );
-    // instance.db.sequelize.authenticate(); // Test DB connection
-    // const sequelize = instance.db.sequelize;
-    // const umzug = new Umzug({
-    //   migrations: {
-    //     // indicates the folder containing the migration .js files
-    //     path: migrations,
-    //     // inject sequelize's QueryInterface in the migrations
-    //     params: [sequelize.getQueryInterface()],
-    //   },
-    //   // indicates that the migration data should be store in the database
-    //   // itself through sequelize. The default configuration creates a table
-    //   // named `SequelizeMeta`.
-    //   storage: "sequelize",
-    //   storageOptions: {
-    //     sequelize: sequelize,
-    //   },
-    // });
-
-    // // Checks migrations and run them if they are not already applied. To keep
-    // // track of the executed migrations, a table (and sequelize model) called SequelizeMeta
-    // // will be automatically created (if it doesn't exist already) and parsed.
-    // await umzug.up();
-
+    await instance.db.sequelize.authenticate(); // Test DB connection
     http = instance.http;
     done();
   });
@@ -98,7 +76,7 @@ describe("Server Endpoint", () => {
         done();
       }));
 
-  xtest("/poll (post)", (done) => {
+  test("/poll (post)", (done) => {
     const answer = (emoji, answerText) => {
       return { emoji: emoji, answer: answerText };
     };
