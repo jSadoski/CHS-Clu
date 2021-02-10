@@ -1,18 +1,39 @@
-version: 2.1
+version: 2
 jobs:
-  test:
-    executor: node/default
+  build:
+    # Primary container image where all commands run
+    docker:
+      - image: circleci/node:14.14.0
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD # context / project UI env-var reference
+        environment:
+          NODE_ENV: test
+          PGHOST: 127.0.0.1
+          PGUSER: root
+          DATABASE_URL: postgres://postgres:chs_testing@localhost:5432/chs_testing
+
+      # Service container image available at `host: localhost`
+      - image: circleci/postgres:9.6.2-alpine
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD # context / project UI env-var reference
+        environment:
+          POSTGRES_PASSWORD: chs_testing
+          POSTGRES_DB: chs_testing
+
     steps:
       - checkout
-      - run: npm config set python /usr/bin/python3
-      - node/install-packages:
-          cache-path: ~/project/node_modules
-          override-ci-command: npm install
-      - run: npm run test
-orbs:
-  node: circleci/node@4.1.0
-  db: onehq/postgres@1.1.0
-workflows:
-  test_my_app:
-    jobs:
-      - test
+      # Bundle install dependencies
+      - run:
+          name: Install dependencies
+          command: npm install --also=dev
+      - run: sudo apt update && sudo apt install -y postgresql-client || true
+      - run:
+          name: Database Setup
+          command: |
+            npx sequelize db:create || true
+            npx sequelize db:migrate
+      - run:
+          name: Jest Tests
+          command: npm test
