@@ -17,7 +17,8 @@
     "migrate": "npx -r dotenv/config sequelize db:migrate",
     "prestart": "npx -r dotenv/config sequelize db:migrate",
     "start": "node ./src/index.js",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "repository": {
     "type": "git",
