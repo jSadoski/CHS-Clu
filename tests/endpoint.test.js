@@ -92,6 +92,14 @@ describe("Server Endpoint", () => {
         answer("🥟", "Dumpling"),
       ],
     };
+
+    const answersRes = [
+      { name: "🌯", value: "Burrito", inline: false },
+      { name: "🍱", value: "Bento Box", inline: false },
+      { name: "🍰", value: "Shortcake", inline: false },
+      { name: "🥟", value: "Dumpling", inline: false },
+    ];
+
     request(http)
       .post("/poll")
       .send(poll)
@@ -104,6 +112,9 @@ describe("Server Endpoint", () => {
         expect(resObj).toHaveProperty("id");
         expect(resObj).toHaveProperty("channelID");
         expect(resObj.channelID).toEqual(poll.channel);
+        expect(resObj.embeds[0].title).toEqual(poll.title);
+        expect(resObj.embeds[0].description).toEqual(poll.question);
+        expect(resObj.embeds[0].fields).toEqual(answersRes);
         done();
       });
   });
