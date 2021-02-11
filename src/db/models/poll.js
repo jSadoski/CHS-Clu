@@ -20,10 +20,10 @@ module.exports = (sequelize, DataTypes) => {
       answers: {
         type: DataTypes.STRING,
         get() {
-          const rawValue = this.getDataValue("answers").split(";");
+          return JSON.parse(this.getDataValue("answers"));
         },
         set(val) {
-          this.setDataValue("answers", val.join(";"));
+          return this.setDataValue("answers", JSON.stringify(val));
         },
       },
     },

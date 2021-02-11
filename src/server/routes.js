@@ -447,10 +447,16 @@ router.setserver = (guild, db) => {
       answers: poll["answers"],
     });
 
+    /* https://discord.js.org/?source=post_page---------------------------#/docs/main/stable/typedef/EmbedFieldData */
+    const ansEmbed = [];
+    poll.db["answers"].forEach((item) =>
+      ansEmbed.push({ inline: false, name: item.emoji, value: item.answer })
+    );
+
     const embed = new Discord.MessageEmbed()
       .setTitle(poll.db["title"])
       .setDescription(poll.db["question"])
-      .addFields(poll.db["answers"]);
+      .addFields(ansEmbed);
 
     guild.channels.cache
       .get(poll.db["channel"])
