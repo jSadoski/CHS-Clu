@@ -21,7 +21,8 @@ describe("Server Endpoint", () => {
   });
 
   afterAll(async (done) => {
-    await instance.close(done);
+    await instance.close();
+    done();
   });
 
   test("/", (done) =>

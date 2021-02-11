@@ -11,14 +11,21 @@ const instance = async (token, serverID, port) => {
         .array()
         .filter((guild) => guild.id == serverID)[0];
       this.http = await api(this.guild, this.db, port);
-    })
-    .catch((err) => console.log(err));
 
-  this.close = async (done) => {
-    await Promise.all([this.client.destroy(), this.http.close()])
-      .then(done)
-      .catch((err) => console.log(err));
-  };
+      this.close = async (done) => {
+        await Promise.all([
+          this.client.destroy(),
+          this.http.close(),
+          this.db.sequelize.close(),
+        ])
+          .then(done)
+          .catch((err) => console.log(err));
+      };
+    })
+    .catch((err) => {
+      console.log(err);
+      process.exit(1);
+    });
 
   return this;
 };
